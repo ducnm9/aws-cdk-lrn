@@ -16,7 +16,7 @@ export class PhotosStack extends cdk.Stack {
     });
 
     new cdk.CfnOutput(this, "photos-bucket", {
-      value: photosBucket.bucketName,
+      value:photosBucket.bucketArn,
       exportName: "photos-bucket",
     });
   }
