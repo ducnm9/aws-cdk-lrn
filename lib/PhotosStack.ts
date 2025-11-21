@@ -11,22 +11,20 @@ export class PhotosStack extends cdk.Stack {
 
     this.initializSuffix();
 
-    new Bucket(this, "PhotosBucket2", {
+    const photosBucket =  new Bucket(this, "PhotosBucket2", {
       bucketName: `my-photos-bucket-${this.stackSuffix}`,
     });
 
-    // (myBucket.node.defaultChild as CfnBucket).overrideLogicalId("PhotosBucket1234");
-
-    // create a new resource
-
-    // delete the old one
+    new cdk.CfnOutput(this, "photos-bucket", {
+      value: photosBucket.bucketName,
+      exportName: "photos-bucket",
+    });
   }
 
-
-  private overrideLogicalId(resource: cdk.CfnResource, newLogicalId: string) {
-    const cfnResource = resource as cdk.CfnResource;
-    (cfnResource.node.defaultChild as CfnBucket).overrideLogicalId(newLogicalId);
-  }
+  // private overrideLogicalId(resource: cdk.CfnResource, newLogicalId: string) {
+  //   const cfnResource = resource as cdk.CfnResource;
+  //   (cfnResource.node.defaultChild as CfnBucket).overrideLogicalId(newLogicalId);
+  // }
 
   private initializSuffix(){
     const shortStackId = cdk.Fn.select(2, cdk.Fn.split("/", this.stackId));
